@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">atto</string>
+    <string name="todo">TODO</string>
+    <string name="마켓">마켓</string>
+    <string name="음식점">음식점</string>
+    <string name="my스크랩">my 스크랩</string>
+</resources>

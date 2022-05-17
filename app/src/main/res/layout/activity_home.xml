@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--mypage로 가는 버튼-->
+    <ImageButton
+        android:id="@+id/mybtn"
+        android:layout_width="44dp"
+        android:layout_height="45dp"
+        android:background="@drawable/mypagebtn"
+        android:layout_alignParentEnd="true">
+    </ImageButton>
+
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/marcketbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/마켓"
+            style="?android:attr/buttonBarButtonStyle" />
+
+        <Button
+            android:id="@+id/restaurantbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/음식점"
+            style="?android:attr/buttonBarButtonStyle" />
+
+        <Button
+            android:id="@+id/scrapbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/my스크랩"
+            style="?android:attr/buttonBarButtonStyle" />
+
+    </LinearLayout>
+
+</RelativeLayout>
