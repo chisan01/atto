@@ -9,6 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Atto_frontend" >
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBV2kKMEvXfwlM5ub-3y4ckbbIacOkAv7M"/>
         <activity
             android:name=".MypageScrapActivity"
             android:exported="false" />
