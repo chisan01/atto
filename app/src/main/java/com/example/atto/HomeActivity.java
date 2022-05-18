@@ -12,7 +12,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 public class HomeActivity extends AppCompatActivity {
 
-    ImageButton mybtn;
     Button marcketbtn, restaurantbtn, scrapbtn;
 
     @Override
@@ -27,21 +26,6 @@ public class HomeActivity extends AppCompatActivity {
             transaction.replace(R.id.frame, marcketFragment);
             transaction.commit();
         }
-
-        //마이페이지 버튼
-        mybtn=(ImageButton) findViewById(R.id.mybtn);
-        mybtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {  //프레그먼트 지우고 마이페이지 화면 출력 왜안대?
-                //프레그먼트땜에 화면이 가려져서 안보이는 건가?????????
-                Fragment fragment=getSupportFragmentManager().findFragmentById(R.id.frame);
-                FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
-                transaction.remove(fragment);
-                //setTransaction을 이용해 애니메이션을 추가해서 프레그먼트가 지워지는걸 자연스럽게 보여줄 수 잇다.
-                Intent intent=new Intent(getApplicationContext(), MypageActivity.class);
-                startActivity(intent);
-            }
-        });
 
         marcketbtn=(Button) findViewById(R.id.marcketbtn);
         marcketbtn.setOnClickListener(new View.OnClickListener() {
