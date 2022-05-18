@@ -4,15 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--mypage로 가는 버튼-->
-    <ImageButton
-        android:id="@+id/mybtn"
-        android:layout_width="44dp"
-        android:layout_height="45dp"
-        android:background="@drawable/mypagebtn"
-        android:layout_alignParentEnd="true">
-    </ImageButton>
-
     <FrameLayout
         android:id="@+id/frame"
         android:layout_width="match_parent"
