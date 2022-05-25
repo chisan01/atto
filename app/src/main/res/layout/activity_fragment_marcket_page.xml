@@ -103,28 +103,12 @@
                 android:text="인기 상품"
                 android:textSize="25dp"/>
 
-            <TableLayout
-                android:id="@+id/tablelayout"
+            <LinearLayout
+                android:id="@+id/lineartable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:stretchColumns="*">
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
-                </TableRow>
-            </TableLayout>
+                android:orientation="vertical"
+                android:layout_marginLeft="50px"/>
 
         </LinearLayout>
 

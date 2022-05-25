@@ -1,13 +1,18 @@
 package com.example.atto;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -18,14 +23,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.atto.database.AppDatabase;
-import com.example.atto.database.Product;
 import com.example.atto.database.ProductDao;
 import com.example.atto.database.ProductWithBrandName;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 public class Fragment_marcket_page_Activity extends Fragment {
-    private TableLayout tableLayout;
+    private LinearLayout lineartable;
     ImageButton mybtn;
     Button categorybtn, brandbtn;
 
@@ -74,38 +81,70 @@ public class Fragment_marcket_page_Activity extends Fragment {
         });
 
         //인기상품 출력
-        tableLayout = (TableLayout) fv.findViewById(R.id.tablelayout);
+        lineartable=(LinearLayout)fv.findViewById(R.id.lineartable);
 
         AppDatabase appDatabase = AppDatabase.getInstance(getActivity().getApplicationContext());
         ProductDao productDao = appDatabase.productDao();
 
         List<ProductWithBrandName> productWithBrandNameList = productDao.getAll();
 
+        LinearLayout horlinear=new LinearLayout(getActivity().getApplicationContext());;
         for (ProductWithBrandName productWithBrandName : productWithBrandNameList) {
-            //테이블 레이아웃에 새로운 행 추가해서 상품 출력
-            TableRow tableRow = new TableRow(getActivity().getApplicationContext());
-            tableRow.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            //상품 정보 vertical layout으로 출력
+            LinearLayout linearLayout= new LinearLayout(getActivity().getApplicationContext());
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(20,20,20,20);
+            linearLayout.setLayoutParams(params);
+            linearLayout.setOrientation(LinearLayout.VERTICAL);
 
+            //상품 사진
+            ImageView imageView= new ImageView(getActivity().getApplicationContext());
+            Bitmap bmp=null;
+            try {
+                String img_url = productWithBrandName.photoURL;
+                System.out.println("img_url = " + img_url);
+                URL url = new URL(img_url);
+                bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            imageView.setImageBitmap(bmp);
+            linearLayout.addView(imageView);
+
+            //상품 정보
             TextView textView = new TextView(getActivity().getApplicationContext());
-            textView.setText(productWithBrandName.name);
+            textView.setText(productWithBrandName.name);  //이름
             textView.setGravity(Gravity.LEFT);
+            textView.setMaxLines(2);  //두 줄 출력
+            textView.setEms(10);  //한 줄에 글자 수
+            textView.setEllipsize(TextUtils.TruncateAt.END);  //말줄임표
             textView.setTextSize(14);
-            tableRow.addView(textView);
+            linearLayout.addView(textView);
 
             TextView textView2 = new TextView(getActivity().getApplicationContext());
-            textView2.setText(productWithBrandName.category);
+            textView2.setText(productWithBrandName.category);  //카테고리
             textView2.setGravity(Gravity.LEFT);
             textView2.setTextSize(14);
-            tableRow.addView(textView2);
+            linearLayout.addView(textView2);
 
             TextView textView3 = new TextView(getActivity().getApplicationContext());
             if (productWithBrandName.price == -1) textView3.setText("품절");
-            else textView3.setText(productWithBrandName.price + " $");
+            else textView3.setText(productWithBrandName.price + " $");  //가격
             textView3.setGravity(Gravity.LEFT);
             textView3.setTextSize(14);
-            tableRow.addView(textView3);
+            linearLayout.addView(textView3);
 
-            tableLayout.addView(tableRow);
+            //한 줄에 상품 세 개씩 출력
+            if (productWithBrandName.id % 2 == 0) {
+                horlinear = new LinearLayout(getActivity().getApplicationContext());
+                lineartable.addView(horlinear);
+
+                horlinear.addView(linearLayout);
+            } else {
+                horlinear.addView(linearLayout);
+            }
         }
 
         return fv;
