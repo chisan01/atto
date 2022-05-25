@@ -66,13 +66,7 @@ public class Fragment_marcket_page_Activity extends Fragment {
         });
 
         //인기상품 출력
-        tableLayout=(TableLayout) fv.findViewById(R.id.tablelayout);
-        //테이블 레이아웃에 새로운 행 추가해서 상품 출력
-        TableRow tableRow=new TableRow(getActivity().getApplicationContext());
-        tableRow.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        /* 인기상품 출력
-        for(int i=0; i<)
-*/
+
         return fv;
     }
 }
