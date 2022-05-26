@@ -20,9 +20,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.atto.database.AppDatabase;
-import com.example.atto.database.BrandDao;
 import com.example.atto.database.ProductDao;
 import com.example.atto.database.ProductWithBrandName;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -40,10 +41,13 @@ public class Fragment_marcket_category extends Fragment {
         if(category.equals("all")) productWithBrandNameList = productDao.getAll();
         else productWithBrandNameList = productDao.findAllByCategory(category);
 
-        printProductToTableLayout(fv, productWithBrandNameList);
+        printProductToView(fv, productWithBrandNameList);
     }
 
-    public void printProductToTableLayout(View fv, List<ProductWithBrandName> productWithBrandNameList) {
+    public void printProductToView(View fv, List<ProductWithBrandName> productWithBrandNameList) {
+        TextView numOfProduct = fv.findViewById(R.id.numOfProduct);
+        numOfProduct.setText(Integer.toString(productWithBrandNameList.size()));
+
         TableLayout categoryTableLayout = (TableLayout) fv.findViewById(R.id.categoryTablelayout);
         categoryTableLayout.removeAllViews();
 //        categoryTableLayout.removeAllViewsInLayout();
@@ -59,7 +63,9 @@ public class Fragment_marcket_category extends Fragment {
             tableRow.addView(textView);
 
             TextView textView2 = new TextView(getActivity().getApplicationContext());
-            textView2.setText(productWithBrandName.name);
+            String productName = productWithBrandName.name;
+            if(productName.length() > 20) productName = productName.substring(0, 20) + "\n" + productName.substring(20);
+            textView2.setText(productName);
             textView2.setGravity(Gravity.LEFT);
             textView2.setTextSize(14);
             tableRow.addView(textView2);
@@ -102,10 +108,10 @@ public class Fragment_marcket_category extends Fragment {
         });
 
         LinearLayout chooseCategoryButtons = fv.findViewById(R.id.chooseCategoryButtons);
-        for (String category : categories) {
+        for (int i=0; i<categories.length; i++) {
             Button button = new Button(getActivity().getApplicationContext());
             button.setBackgroundResource(R.drawable.roundbutton);
-            button.setText(category);
+            button.setText(res.getStringArray(R.array.categoryKOR)[i]);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
@@ -113,6 +119,7 @@ public class Fragment_marcket_category extends Fragment {
             params.setMargins(10, 10, 10, 10);
             button.setLayoutParams(params);
 
+            String category = categories[i];
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
