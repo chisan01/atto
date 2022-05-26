@@ -96,7 +96,7 @@ public class Fragment_marcket_page_Activity extends Fragment {
             //상품 정보 vertical layout으로 출력
             LinearLayout linearLayout= new LinearLayout(getActivity().getApplicationContext());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(20,20,20,20);
+            params.setMargins(40,30,40,30);
             linearLayout.setLayoutParams(params);
             linearLayout.setOrientation(LinearLayout.VERTICAL);
 
@@ -106,25 +106,33 @@ public class Fragment_marcket_page_Activity extends Fragment {
             Glide.with(this).load(image_url).into(imageView);
             linearLayout.addView(imageView);
 
+            TextView textView2 = new TextView(getActivity().getApplicationContext());
+            textView2.setText("["+productWithBrandName.category+"]");  //카테고리
+            textView2.setGravity(Gravity.LEFT);
+            textView2.setTextSize(14);
+            linearLayout.addView(textView2);
+
             //상품 정보
             TextView textView = new TextView(getActivity().getApplicationContext());
             textView.setText(productWithBrandName.name);  //이름
             textView.setGravity(Gravity.LEFT);
             textView.setMaxLines(2);  //두 줄 출력
-            textView.setEms(10);  //한 줄에 글자 수
+            textView.setEms(9);  //한 줄에 글자 수
             textView.setEllipsize(TextUtils.TruncateAt.END);  //말줄임표
             textView.setTextSize(14);
             linearLayout.addView(textView);
 
-            TextView textView2 = new TextView(getActivity().getApplicationContext());
-            textView2.setText(productWithBrandName.category);  //카테고리
-            textView2.setGravity(Gravity.LEFT);
-            textView2.setTextSize(14);
-            linearLayout.addView(textView2);
-
             TextView textView3 = new TextView(getActivity().getApplicationContext());
             if (productWithBrandName.price == -1) textView3.setText("품절");
-            else textView3.setText(productWithBrandName.price + " $");  //가격
+            else {  //가격 출력
+                int thwon =productWithBrandName.price/1000;
+                int onewon=productWithBrandName.price%1000;
+                if (onewon == 0) {
+                    textView3.setText(thwon + ",000 원");
+                } else {
+                    textView3.setText(thwon+","+onewon+" 원");
+                }
+            }
             textView3.setGravity(Gravity.LEFT);
             textView3.setTextSize(14);
             linearLayout.addView(textView3);
