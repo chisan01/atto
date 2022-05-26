@@ -96,7 +96,7 @@ public class Fragment_marcket_page_Activity extends Fragment {
             //상품 정보 vertical layout으로 출력
             LinearLayout linearLayout= new LinearLayout(getActivity().getApplicationContext());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(40,30,40,30);
+            params.setMargins(50,10,30,20);  //마진 수정
             linearLayout.setLayoutParams(params);
             linearLayout.setOrientation(LinearLayout.VERTICAL);
 
@@ -110,6 +110,7 @@ public class Fragment_marcket_page_Activity extends Fragment {
             textView2.setText("["+productWithBrandName.category+"]");  //카테고리
             textView2.setGravity(Gravity.LEFT);
             textView2.setTextSize(14);
+            textView2.setPadding(30, 20, 0, 0);  //패딩
             linearLayout.addView(textView2);
 
             //상품 정보
@@ -120,6 +121,7 @@ public class Fragment_marcket_page_Activity extends Fragment {
             textView.setEms(9);  //한 줄에 글자 수
             textView.setEllipsize(TextUtils.TruncateAt.END);  //말줄임표
             textView.setTextSize(14);
+            textView.setPadding(30, 0, 0, 0);  //패딩
             linearLayout.addView(textView);
 
             TextView textView3 = new TextView(getActivity().getApplicationContext());
@@ -135,6 +137,7 @@ public class Fragment_marcket_page_Activity extends Fragment {
             }
             textView3.setGravity(Gravity.LEFT);
             textView3.setTextSize(14);
+            textView3.setPadding(30, 40, 0, 0);  //패딩
             linearLayout.addView(textView3);
 
             //한 줄에 상품 세 개씩 출력
