@@ -13,8 +13,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,12 +20,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.example.atto.database.AppDatabase;
 import com.example.atto.database.ProductDao;
 import com.example.atto.database.ProductWithBrandName;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.List;
 
@@ -44,6 +46,7 @@ public class Fragment_marcket_page_Activity extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View fv = inflater.inflate(R.layout.activity_fragment_marcket_page, container, false);
+        //getXmlData(); // network 동작, 인터넷에서 xml을 받아오는 코드
 
         //마이페이지 버튼 ->마이페이지로 이동
         mybtn = (ImageButton) fv.findViewById(R.id.mybtn);
@@ -99,18 +102,8 @@ public class Fragment_marcket_page_Activity extends Fragment {
 
             //상품 사진
             ImageView imageView= new ImageView(getActivity().getApplicationContext());
-            Bitmap bmp=null;
-            try {
-                String img_url = productWithBrandName.photoURL;
-                System.out.println("img_url = " + img_url);
-                URL url = new URL(img_url);
-                bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            imageView.setImageBitmap(bmp);
+            String image_url = productWithBrandName.photoURL;
+            Glide.with(this).load(image_url).into(imageView);
             linearLayout.addView(imageView);
 
             //상품 정보
