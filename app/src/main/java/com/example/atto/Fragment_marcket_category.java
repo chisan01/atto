@@ -2,6 +2,7 @@ package com.example.atto;
 
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -19,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.atto.database.AppDatabase;
 import com.example.atto.database.ProductDao;
 import com.example.atto.database.ProductWithBrandName;
@@ -28,6 +31,8 @@ import org.w3c.dom.Text;
 import java.util.List;
 
 public class Fragment_marcket_category extends Fragment {
+
+    private LinearLayout lineartable;
 
     public Fragment_marcket_category() {
 
@@ -48,36 +53,70 @@ public class Fragment_marcket_category extends Fragment {
         TextView numOfProduct = fv.findViewById(R.id.numOfProduct);
         numOfProduct.setText(Integer.toString(productWithBrandNameList.size()));
 
-        TableLayout categoryTableLayout = (TableLayout) fv.findViewById(R.id.categoryTablelayout);
-        categoryTableLayout.removeAllViews();
-//        categoryTableLayout.removeAllViewsInLayout();
-        for (ProductWithBrandName productWithBrandName : productWithBrandNameList) {
-            //테이블 레이아웃에 새로운 행 추가해서 상품 출력
-            TableRow tableRow = new TableRow(getActivity().getApplicationContext());
-            tableRow.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        //카테고리별 상품 출력
+        lineartable=(LinearLayout)fv.findViewById(R.id.lineartable);
 
+        lineartable.removeAllViews();
+//        lineartable.removeAllViewsInLayout();
+        LinearLayout horlinear= new LinearLayout(getActivity().getApplicationContext());
+        for (ProductWithBrandName productWithBrandName : productWithBrandNameList) {
+            //상품 정보 vertical layout으로 출력
+            LinearLayout linearLayout=new LinearLayout(getActivity().getApplicationContext());
+            LinearLayout.LayoutParams params= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(50, 10, 30, 20);
+            linearLayout.setLayoutParams(params);
+            linearLayout.setOrientation(LinearLayout.VERTICAL);
+
+            //상품 사진
+            ImageView imageView= new ImageView(getActivity().getApplicationContext());
+            String image_url= productWithBrandName.photoURL;
+            Glide.with(this).load(image_url).into(imageView);
+            linearLayout.addView(imageView);
+
+            //상품 카테고리
             TextView textView = new TextView(getActivity().getApplicationContext());
-            textView.setText(productWithBrandName.category);
+            textView.setText("["+productWithBrandName.category+"]");
             textView.setGravity(Gravity.LEFT);
             textView.setTextSize(14);
-            tableRow.addView(textView);
+            textView.setPadding(30, 20, 0, 0);  //패딩
+            linearLayout.addView(textView);
 
+            //상품 정보
             TextView textView2 = new TextView(getActivity().getApplicationContext());
-            String productName = productWithBrandName.name;
-            if(productName.length() > 20) productName = productName.substring(0, 20) + "\n" + productName.substring(20);
-            textView2.setText(productName);
+            textView2.setText(productWithBrandName.name);  //이름
             textView2.setGravity(Gravity.LEFT);
+            textView2.setMaxLines(2);  //두 줄 출력
+            textView2.setEms(9);  //한 줄에 글자 수
+            textView2.setEllipsize(TextUtils.TruncateAt.END);  //말줄임표
             textView2.setTextSize(14);
-            tableRow.addView(textView2);
+            textView2.setPadding(30, 0, 0, 0);  //패딩
+            linearLayout.addView(textView2);
 
             TextView textView3 = new TextView(getActivity().getApplicationContext());
             if (productWithBrandName.price == -1) textView3.setText("품절");
-            else textView3.setText(productWithBrandName.price + " $");
+            else {  //가격 출력
+                int thwon =productWithBrandName.price/1000;
+                int onewon=productWithBrandName.price%1000;
+                if (onewon == 0) {
+                    textView3.setText(thwon + ",000 원");
+                } else {
+                    textView3.setText(thwon+","+onewon+" 원");
+                }
+            }
             textView3.setGravity(Gravity.LEFT);
             textView3.setTextSize(14);
-            tableRow.addView(textView3);
+            textView3.setPadding(30, 40, 0, 0);  //패딩
+            linearLayout.addView(textView3);
 
-            categoryTableLayout.addView(tableRow);
+            //한 줄에 상품 세 개씩 출력
+            if (productWithBrandName.id % 2 == 0) {
+                horlinear = new LinearLayout(getActivity().getApplicationContext());
+                lineartable.addView(horlinear);
+
+                horlinear.addView(linearLayout);
+            } else {
+                horlinear.addView(linearLayout);
+            }
         }
     }
 

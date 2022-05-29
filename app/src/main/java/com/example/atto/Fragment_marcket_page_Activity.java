@@ -65,6 +65,8 @@ public class Fragment_marcket_page_Activity extends Fragment {
         categorybtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                categorybtn.setTextColor(getResources().getColorStateList(R.color.ON));
+                brandbtn.setTextColor(getResources().getColorStateList(R.color.black));
                 FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
                 Fragment_marcket_category categoryFragment = new Fragment_marcket_category();
                 transaction.replace(R.id.marcketframe, categoryFragment);
@@ -76,6 +78,8 @@ public class Fragment_marcket_page_Activity extends Fragment {
         brandbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                brandbtn.setTextColor(getResources().getColorStateList(R.color.ON));
+                categorybtn.setTextColor(getResources().getColorStateList(R.color.black));
                 FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
                 Fragment_marcket_brand brandFragment = new Fragment_marcket_brand();
                 transaction.replace(R.id.marcketframe, brandFragment);
@@ -91,7 +95,7 @@ public class Fragment_marcket_page_Activity extends Fragment {
 
         List<ProductWithBrandName> productWithBrandNameList = productDao.getAll();
 
-        LinearLayout horlinear=new LinearLayout(getActivity().getApplicationContext());;
+        LinearLayout horlinear=new LinearLayout(getActivity().getApplicationContext());
         for (ProductWithBrandName productWithBrandName : productWithBrandNameList) {
             //상품 정보 vertical layout으로 출력
             LinearLayout linearLayout= new LinearLayout(getActivity().getApplicationContext());
@@ -106,6 +110,7 @@ public class Fragment_marcket_page_Activity extends Fragment {
             Glide.with(this).load(image_url).into(imageView);
             linearLayout.addView(imageView);
 
+            //상품 카테고리
             TextView textView2 = new TextView(getActivity().getApplicationContext());
             textView2.setText("["+productWithBrandName.category+"]");  //카테고리
             textView2.setGravity(Gravity.LEFT);
