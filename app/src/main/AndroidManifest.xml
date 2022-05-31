@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.atto" >
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
@@ -15,12 +15,16 @@
         android:usesCleartextTraffic="true"
 
         android:supportsRtl="true"
-        android:theme="@style/Theme.Atto_frontend"
+        android:theme="@style/Theme.Atto_frontend">
+        <activity
+            android:name=".BrandActivity"
+            android:exported="false" />
         tools:targetApi="m">
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBV2kKMEvXfwlM5ub-3y4ckbbIacOkAv7M"/>
+            android:value="AIzaSyBV2kKMEvXfwlM5ub-3y4ckbbIacOkAv7M" />
+
         <activity
             android:name=".MypageScrapActivity"
             android:exported="false" />
@@ -32,7 +36,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
