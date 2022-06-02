@@ -45,7 +45,7 @@ public class Fragment_marcket_category extends Fragment {
         ProductDao productDao = appDatabase.productDao();
 
         List<ProductWithBrandName> productWithBrandNameList;
-        if(category.equals("all")) productWithBrandNameList = productDao.getAll();
+        if (category.equals("all")) productWithBrandNameList = productDao.getAll();
         else productWithBrandNameList = productDao.findAllByCategory(category);
 
         printProductToView(fv, productWithBrandNameList);
@@ -56,28 +56,27 @@ public class Fragment_marcket_category extends Fragment {
         numOfProduct.setText(Integer.toString(productWithBrandNameList.size()));
 
         //카테고리별 상품 출력
-        lineartable=(LinearLayout)fv.findViewById(R.id.lineartable);
+        lineartable = (LinearLayout) fv.findViewById(R.id.lineartable);
 
         lineartable.removeAllViews();
-//        lineartable.removeAllViewsInLayout();
-        LinearLayout horlinear= new LinearLayout(getActivity().getApplicationContext());
+        LinearLayout horlinear = new LinearLayout(getActivity().getApplicationContext());
         for (ProductWithBrandName productWithBrandName : productWithBrandNameList) {
             //상품 정보 vertical layout으로 출력
-            LinearLayout linearLayout=new LinearLayout(getActivity().getApplicationContext());
-            LinearLayout.LayoutParams params= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            LinearLayout linearLayout = new LinearLayout(getActivity().getApplicationContext());
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             params.setMargins(50, 10, 30, 20);
             linearLayout.setLayoutParams(params);
             linearLayout.setOrientation(LinearLayout.VERTICAL);
 
             //상품 사진
-            ImageView imageView= new ImageView(getActivity().getApplicationContext());
-            String image_url= productWithBrandName.photoURL;
+            ImageView imageView = new ImageView(getActivity().getApplicationContext());
+            String image_url = productWithBrandName.photoURL;
             Glide.with(this).load(image_url).into(imageView);
             linearLayout.addView(imageView);
 
             //상품 카테고리
             TextView textView = new TextView(getActivity().getApplicationContext());
-            textView.setText("["+productWithBrandName.category+"]");
+            textView.setText("[" + productWithBrandName.category + "]");
             textView.setGravity(Gravity.LEFT);
             textView.setTextSize(14);
             textView.setPadding(30, 20, 0, 0);  //패딩
@@ -97,12 +96,12 @@ public class Fragment_marcket_category extends Fragment {
             TextView textView3 = new TextView(getActivity().getApplicationContext());
             if (productWithBrandName.price == -1) textView3.setText("품절");
             else {  //가격 출력
-                int thwon =productWithBrandName.price/1000;
-                int onewon=productWithBrandName.price%1000;
+                int thwon = productWithBrandName.price / 1000;
+                int onewon = productWithBrandName.price % 1000;
                 if (onewon == 0) {
                     textView3.setText(thwon + ",000 원");
                 } else {
-                    textView3.setText(thwon+","+onewon+" 원");
+                    textView3.setText(thwon + "," + onewon + " 원");
                 }
             }
             textView3.setGravity(Gravity.LEFT);
@@ -149,7 +148,7 @@ public class Fragment_marcket_category extends Fragment {
         });
 
         LinearLayout chooseCategoryButtons = fv.findViewById(R.id.chooseCategoryButtons);
-        for (int i=0; i<categories.length; i++) {
+        for (int i = 0; i < categories.length; i++) {
             Button button = new Button(getActivity().getApplicationContext());
             button.setBackgroundResource(R.drawable.roundbutton);
             button.setText(res.getStringArray(R.array.categoryKOR)[i]);
@@ -165,7 +164,8 @@ public class Fragment_marcket_category extends Fragment {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(prevChooseBtn != null) prevChooseBtn.setBackgroundResource(R.drawable.roundbutton);
+                    if (prevChooseBtn != null)
+                        prevChooseBtn.setBackgroundResource(R.drawable.roundbutton);
                     spinner.setSelection(categoryIndex);
                     button.setBackgroundResource(R.drawable.selected_roundbutton);
                     prevChooseBtn = button;
