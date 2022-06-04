@@ -57,6 +57,7 @@ public class HomeActivity extends AppCompatActivity {
                 Fragment_restaurant_page_Activity restaurantFragment = new Fragment_restaurant_page_Activity();
                 transaction.replace(R.id.frame, restaurantFragment);
                 transaction.commit();
+
             }
         });
 
@@ -74,4 +75,5 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
 }
