@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 public class HomeActivity extends AppCompatActivity {
@@ -39,7 +40,13 @@ public class HomeActivity extends AppCompatActivity {
                 restaurantbtn.setBackgroundColor(Color.parseColor("#f1f3f4"));
                 scrapbtn.setBackgroundColor(Color.parseColor("#f1f3f4"));
 
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                for(Fragment fragment : getSupportFragmentManager().getFragments()) {
+                    if(fragment instanceof Fragment_marcket_page_Activity && fragment.isVisible())
+                        return;
+                    if(fragment.isVisible())
+                        getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                }
+                FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
                 Fragment_marcket_page_Activity marcketFragment = new Fragment_marcket_page_Activity();
                 transaction.replace(R.id.frame, marcketFragment);
                 transaction.commit();
@@ -53,7 +60,13 @@ public class HomeActivity extends AppCompatActivity {
                 restaurantbtn.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.mainGreen));
                 scrapbtn.setBackgroundColor(Color.parseColor("#f1f3f4"));
 
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                for(Fragment fragment : getSupportFragmentManager().getFragments()) {
+                    if(fragment instanceof Fragment_restaurant_page_Activity && fragment.isVisible())
+                        return;
+                    if(fragment.isVisible())
+                        getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                }
+                FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
                 Fragment_restaurant_page_Activity restaurantFragment = new Fragment_restaurant_page_Activity();
                 transaction.replace(R.id.frame, restaurantFragment);
                 transaction.commit();
@@ -68,7 +81,13 @@ public class HomeActivity extends AppCompatActivity {
                 restaurantbtn.setBackgroundColor(Color.parseColor("#f1f3f4"));
                 scrapbtn.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.mainGreen));
 
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                for(Fragment fragment : getSupportFragmentManager().getFragments()) {
+                    if(fragment instanceof Fragment_myscrap_page_Activity && fragment.isVisible())
+                        return;
+                    if(fragment.isVisible())
+                        getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                }
+                FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
                 Fragment_myscrap_page_Activity myscrapFragment = new Fragment_myscrap_page_Activity();
                 transaction.replace(R.id.frame, myscrapFragment);
                 transaction.commit();
