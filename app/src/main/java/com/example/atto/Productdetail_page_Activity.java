@@ -54,11 +54,12 @@ public class Productdetail_page_Activity extends AppCompatActivity {
         productNameField.setText(matchingProduct.name); // 상품명
         priceField.setText(Integer.toString(matchingProduct.price) + "원"); // 가격
 
-        // 스크랩 버튼 페이지로 연결
+        // 스크랩 버튼 -> 스크랩 페이지로 연결
         scrapBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MypageScrapActivity.class);
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                intent .putExtra("productDetailPage", "scrap");
                 //intent.putExtra() // 스크랩 페이지로 전달해줄 값 설정
                 startActivity(intent);
             }

@@ -35,7 +35,7 @@ public class Fragment_restaurant_page_Activity extends Fragment implements OnMap
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootview = (ViewGroup) inflater.inflate(R.layout.activity_fragment_restaurant_page, container, false);
 
-        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+        //마켓 페이지로 연결해야댐
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
