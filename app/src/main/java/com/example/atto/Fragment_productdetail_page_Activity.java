@@ -49,7 +49,6 @@ public class Fragment_productdetail_page_Activity extends Fragment {
         ProductDao productDao = appDatabase.productDao();
         productList = productDao.getAll(); ////
         scrapBtn = fv.findViewById(R.id.scrapBtn);
-        scrapBtnText = fv.findViewById(R.id.scrapBtnText);
         productPageBtn = fv.findViewById(R.id.productPageBtn);
 
         int productId = getArguments().getInt("id");
