@@ -1,6 +1,7 @@
 package com.example.atto;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -81,16 +82,18 @@ public class HomeActivity extends AppCompatActivity {
                 restaurantbtn.setBackgroundColor(Color.parseColor("#f1f3f4"));
                 scrapbtn.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.mainGreen));
 
-                for(Fragment fragment : getSupportFragmentManager().getFragments()) {
-                    if(fragment instanceof Fragment_myscrap_page_Activity && fragment.isVisible())
-                        return;
-                    if(fragment.isVisible())
-                        getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-                }
-                FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
-                Fragment_myscrap_page_Activity myscrapFragment = new Fragment_myscrap_page_Activity();
-                transaction.replace(R.id.frame, myscrapFragment);
-                transaction.commit();
+//                for(Fragment fragment : getSupportFragmentManager().getFragments()) {
+//                    if(fragment instanceof Fragment_myscrap_page_Activity && fragment.isVisible())
+//                        return;
+//                    if(fragment.isVisible())
+//                        getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+//                }
+//                FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
+//                Fragment_myscrap_page_Activity myscrapFragment = new Fragment_myscrap_page_Activity();
+//                transaction.replace(R.id.frame, myscrapFragment);
+//                transaction.commit();
+                Intent intent= new Intent(getApplicationContext(),ScrapListActivity.class);
+                startActivity(intent);
             }
         });
 
