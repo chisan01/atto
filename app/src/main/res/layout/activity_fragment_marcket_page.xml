@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,6 +8,7 @@
 
     <!--인기상품 출력되는 마켓 페이지-->
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -22,16 +24,15 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:src="@drawable/qkek"
-                    android:scaleType="centerCrop">
-                </ImageView>
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/qkek"></ImageView>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <!--mypage로 가는 버튼-->
+
                     <ImageButton
-                        android:id="@+id/mybtn"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="right"
@@ -41,81 +42,118 @@
                         tools:ignore="SpeakableTextPresentCheck"></ImageButton>
 
                     <TextView
-                        android:id="@+id/nickname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="15dp"
-                        android:textSize="16dp"
-                        android:text="닉네임님" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="15dp"
-                        android:textSize="14dp"
-                        android:text="지구를 지키러 함께 떠나요 ~" />
+                        android:paddingLeft="20dp"
+                        android:paddingTop="10dp"
+                        android:text="지구를 지키러 함께 떠나요 ~"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
 
                     <!-- 카테고리, 브랜드 선택 버튼 -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingTop="17dp"
-                        android:paddingLeft="15dp">
+                        android:paddingLeft="15dp"
+                        android:paddingTop="17dp">
+
                         <Button
                             android:id="@+id/categorybtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="#00ff0000"
+                            android:text="카테고리 별"
                             android:textColor="#000000"
-                            android:textStyle="bold"
                             android:textSize="14dp"
-                            android:text="카테고리 별">
-                        </Button>
+                            android:textStyle="bold"></Button>
+
                         <Button
                             android:id="@+id/brandbtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="#00ff0000"
+                            android:text="브랜드 별"
                             android:textColor="#000000"
-                            android:textStyle="bold"
                             android:textSize="14dp"
-                            android:text="브랜드 별">
-                        </Button>
+                            android:textStyle="bold"></Button>
                     </LinearLayout>
-
                 </LinearLayout>
             </FrameLayout>
 
             <!-- 카테고리별, 브랜드별 상품 frame -->
             <FrameLayout
-                android:id="@+id/marcketframe"
+                android:id="@+id/marketframe"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:nestedScrollingEnabled="false">
-            </FrameLayout>
+                android:nestedScrollingEnabled="false"></FrameLayout>
 
             <!--배너 -->
-            <ImageView
-                android:id="@+id/banner"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="360dp"
-                android:src="@drawable/banner"></ImageView>
+                android:layout_height="400dp"
+                android:paddingTop="60dp"
+                android:paddingBottom="60dp">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/sliderViewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/viewFadingEdge"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:background="@drawable/bg_fading_edge"
+                    app:layout_constraintBottom_toBottomOf="@id/sliderViewPager" />
+
+                <LinearLayout
+                    android:id="@+id/layoutIndicators"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="@id/viewFadingEdge"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <!--인기상품 추가 -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="40px"
+                android:layout_marginBottom="40dp"
                 android:text="인기 상품"
-                android:textSize="20dp"
-                android:layout_marginLeft="40px"/>
+                android:textSize="20dp" />
 
             <LinearLayout
                 android:id="@+id/lineartable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="15px"/>
+                android:orientation="vertical" />
 
         </LinearLayout>
-
     </ScrollView>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+
+        <Button
+            android:id="@+id/go_up"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="80dp"
+            android:layout_marginRight="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/circle_up_icon"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </FrameLayout>
