@@ -14,8 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.atto.database.AppDatabase;
+import com.example.atto.database.Product;
+import com.example.atto.database.ProductBookmark;
+import com.example.atto.database.ProductBookmarkDao;
 import com.example.atto.database.ProductDao;
 import com.example.atto.database.ProductWithBrandName;
+import com.example.atto.database.UserDatabase;
 
 import java.util.List;
 
@@ -30,8 +34,11 @@ public class ScrapListActivity extends AppCompatActivity {
 
         AppDatabase appDatabase = AppDatabase.getInstance(getApplicationContext());
         ProductDao productDao = appDatabase.productDao();
-        List<ProductWithBrandName> productsWithBookmarked = productDao.findAllWhichBookmarked();
-        for(ProductWithBrandName product : productsWithBookmarked) {
+        UserDatabase userDatabase = UserDatabase.getInstance(getApplicationContext());
+        ProductBookmarkDao productBookmarkDao = userDatabase.productBookmarkDao();
+        List<ProductBookmark> productBookmarks =productBookmarkDao.getAll();
+        for (ProductBookmark productBookmark : productBookmarks) {
+            Product product = productDao.findById(productBookmark.productId);
             LinearLayout linearScrapElement = new LinearLayout(getApplicationContext());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             params.setMargins(70,10,30,20);
@@ -60,7 +67,7 @@ public class ScrapListActivity extends AppCompatActivity {
 
             //상품 메모
             TextView productMemo = new TextView(getApplicationContext());
-            productMemo.setText(product.memo);
+            productMemo.setText(productBookmark.memo);
             productMemo.setGravity(Gravity.LEFT);
             productMemo.setMaxLines(2);  // 두 줄 출력
             productMemo.setEms(20);  // 한 줄에 글자 수
