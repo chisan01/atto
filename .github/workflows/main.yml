@@ -18,21 +18,29 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-          
-      - name: Build APK
-        run: bash ./gradlew assembleDebug --stacktrace
 
       - name: store app version code
         run: echo "VERSION=$(bash ./gradlew -q printVersionCode | tail -n 1)" >> $GITHUB_ENV
 
       - name: print app version code
         run: echo $((VERSION + 1))
-  
+
+      - name: Update gradle version for Android
+        uses: damienaicheh/update-android-version-gradle-action@v1.0.0
+        with:
+          build-gradle-path: './app/build.gradle'
+          version-code: $((VERSION + 1))
+          version-name: "$((VERSION + 1)).0"
+          print-file: true
+          
+      - name: Build APK
+        run: bash ./gradlew assembleDebug --stacktrace
+
       - name: Release APK
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
+          automatic_release_tag: "v.$((VERSION+1))"
           prerelease: false
-          title: "test release"
+          title: "v.$((VERSION+1))"
           files: "**.apk"
