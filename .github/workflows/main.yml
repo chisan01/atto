@@ -38,8 +38,8 @@ jobs:
         with:
           name: apk
           
-      - name: check downloaded apk
-        run: ls -R
+      - name: move downloaded apk
+        run: sudo mv apk/app-debug.apk ./app-debug.apk
           
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
@@ -48,4 +48,4 @@ jobs:
           prerelease: false
           title: "test release"
           files: |
-            "apk/*.apk"
+            "app-debug.apk"
