@@ -20,10 +20,13 @@ jobs:
           java-version: 11
           
       - name: Build APK
-        run: bash ./gradlew assembleDebug --stacktrace
+        run: ./gradlew assembleDebug --stacktrace
 
-      - name: check app version code
-        run: bash ./gradlew -q printVersionCode
+      - name: store app version code
+        run: VERSION=$(./gradlew -q printVersionCode | tail -n 1)
+
+      - name: print app version code
+        run: echo "$VERSION version"
   
       - name: Release APK
         uses: "marvinpinto/action-automatic-releases@latest"
@@ -31,5 +34,5 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
           prerelease: false
-          title: "test release 2"
+          title: "test release"
           files: "**.apk"
