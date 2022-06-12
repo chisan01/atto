@@ -1,0 +1,62 @@
+name: Minimal Android CI Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  apk:
+    # prevent additional release
+    if: ${{ github.event.head_commit.message }} != 'versionCode increased'
+
+    name: Build & Deploy APK
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - name: check commit message
+        run: echo ${{ github.event.head_commit.message }}
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: Setup JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: store app version code
+        run: echo "VERSION=$(bash ./gradlew -q printVersionCode | tail -n 1)" >> $GITHUB_ENV
+
+      - name: increase app version code
+        run: echo "VERSION=$((VERSION + 1))" >> $GITHUB_ENV
+
+      - name: print app version code
+        run: echo $VERSION
+
+      - name: Update gradle version for Android
+        uses: damienaicheh/update-android-version-gradle-action@v1.0.0
+        with:
+          build-gradle-path: './app/build.gradle'
+          version-code: ${{ env.VERSION }}
+          version-name: "${{ env.VERSION }}.0"
+          print-file: true
+
+      - name: Commit version update
+        run: |
+          git config --global user.name 'chisan01'
+          git config --global user.email 'chisan2001@naver.com'
+          git commit -am "versionCode increased"
+          git push
+
+      - name: Build APK
+        run: bash ./gradlew assembleDebug --stacktrace
+
+      - name: Release APK
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "v.${{ env.VERSION }}"
+          prerelease: false
+          title: "v.${{ env.VERSION }}"
+          files: "**.apk"
