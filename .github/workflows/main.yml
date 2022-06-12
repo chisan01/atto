@@ -22,15 +22,18 @@ jobs:
       - name: store app version code
         run: echo "VERSION=$(bash ./gradlew -q printVersionCode | tail -n 1)" >> $GITHUB_ENV
 
+      - name: increase app version code
+        run: echo "VERSION=$((VERSION + 1))" >> $GITHUB_ENV
+
       - name: print app version code
-        run: echo $((VERSION + 1))
+        run: echo $VERSION
 
       - name: Update gradle version for Android
         uses: damienaicheh/update-android-version-gradle-action@v1.0.0
         with:
           build-gradle-path: './app/build.gradle'
-          version-code: $((VERSION + 1))
-          version-name: "$((VERSION + 1)).0"
+          version-code: ${{ env.VERSION }}
+          version-name: "${{ env.VERSION }}.0"
           print-file: true
           
       - name: Build APK
@@ -40,7 +43,7 @@ jobs:
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "v.$((VERSION+1))"
+          automatic_release_tag: "v.$VERSION"
           prerelease: false
-          title: "v.$((VERSION+1))"
+          title: "v.$VERSION"
           files: "**.apk"
