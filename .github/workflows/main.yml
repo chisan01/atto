@@ -21,6 +21,9 @@ jobs:
           
       - name: Build APK
         run: bash ./gradlew assembleDebug --stacktrace
+
+      - name: check app version code
+        run: bash ./gradlew -q printVersionCode
   
       - name: Release APK
         uses: "marvinpinto/action-automatic-releases@latest"
