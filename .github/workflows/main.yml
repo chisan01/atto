@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         
       - name: Setup JDK
         uses: actions/setup-java@v1
@@ -35,7 +35,14 @@ jobs:
           version-code: ${{ env.VERSION }}
           version-name: "${{ env.VERSION }}.0"
           print-file: true
-          
+
+      - name: Commit version update
+        run: |
+          git config --global user.name 'chisan01'
+          git config --global user.email 'chisan2001@naver.com'
+          git commit -am "versionCode increased"
+          git push
+
       - name: Build APK
         run: bash ./gradlew assembleDebug --stacktrace
 
