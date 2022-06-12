@@ -20,13 +20,13 @@ jobs:
           java-version: 11
           
       - name: Build APK
-        run: sudo ./gradlew assembleDebug --stacktrace
+        run: bash ./gradlew assembleDebug --stacktrace
 
       - name: store app version code
-        run: sudo VERSION=$(sudo ./gradlew -q printVersionCode | tail -n 1)
+        run: bash VERSION=$(bash ./gradlew -q printVersionCode | tail -n 1)
 
       - name: print app version code
-        run: sudo echo "$VERSION version"
+        run: bash echo "$VERSION version"
   
       - name: Release APK
         uses: "marvinpinto/action-automatic-releases@latest"
