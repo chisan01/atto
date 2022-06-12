@@ -23,10 +23,10 @@ jobs:
         run: bash ./gradlew assembleDebug --stacktrace
 
       - name: store app version code
-        run: bash VERSION=$(bash ./gradlew -q printVersionCode | tail -n 1)
+        run: VERSION=$(bash ./gradlew -q printVersionCode | tail -n 1)
 
       - name: print app version code
-        run: bash echo "$VERSION version"
+        run: echo "$VERSION version"
   
       - name: Release APK
         uses: "marvinpinto/action-automatic-releases@latest"
